@@ -1,0 +1,17 @@
+/lambda/
+/scripts
+/config
+.history
+/coverage
+/mock
+/lib
+/dist
+/public
+/node_modules
+/tests
+__tests__
+*.json
+/e2e
+/assets
+.github
+.vscode

@@ -1,0 +1,75 @@
+@import "@/styles/variables.scss";
+
+.login-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-image: url("https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg");
+  background-color: #f0f2f5;
+  background-repeat: no-repeat;
+  background-position: center 110px;;
+  background-size: 100%;
+
+  .svg-wrapper {
+    z-index: 10001;
+    fill: #20a0ff;
+    color: #fff;
+    position: fixed;
+    top: -6px;
+    border: 0;
+    right: -6px;
+  }
+
+  .wrap {
+    flex: 1;
+    margin-top: 90px;
+    width: 320px;
+    align-self: center;
+  }
+
+  .ant-input-affix-wrapper:not(:nth-child(1)) {
+    margin-top: 20px;
+  }
+
+  .anticon {
+    color: #0000004d;
+  }
+
+  .logo-wrap {
+    margin-bottom: 30px;
+    text-align: center;
+
+    .logo {
+      width: 96px;
+      height: 96px;
+      -webkit-user-drag: none;
+    }
+
+    em {
+      font-size: 24px;
+      font-weight: bold;
+      color: #000;
+      margin-left: 15px;
+      vertical-align: text-top;
+    }
+  }
+
+  .login-bar {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 20px;
+  }
+
+  .captcha {
+    display: block;
+    cursor: pointer;
+    height: 30px;
+    border-left: 1px solid #ccc;
+  }
+
+  .register {
+    margin-top: 15px;
+    text-align: right;
+    color: var(--theme-color);
+  }
+}

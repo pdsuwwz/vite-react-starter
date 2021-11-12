@@ -1,0 +1,10 @@
+.nested-box__btns {
+  // color: red;
+  padding-top: 20px;
+  :global {
+    .ant-btn {
+      margin-right: 8px;
+      margin-bottom: 12px;
+    }
+  }
+}
