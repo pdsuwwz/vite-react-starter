@@ -1,4 +1,4 @@
-import React, { ComponentType, Suspense, useEffect, useLayoutEffect, memo } from 'react'
+import React, { MutableRefObject, useState, useMemo, useCallback, ComponentType, Suspense, useRef, useEffect, useLayoutEffect, memo } from 'react'
 import PrivateRoute from '@/components/PrivateRoute'
 import CONFIG from '@/config'
 import routesMap from './routes'
@@ -13,6 +13,9 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import NoMatch from '@/components/exception/404'
 import useIsMounted from '@/hooks/useIsMounted'
+import { sleep } from '@/utils'
+import { TODO } from '@/store/constants'
+import { useAppState } from '@/store'
 
 // Functional Component
 // const Routes: React.FC = function () {
@@ -39,6 +42,18 @@ import useIsMounted from '@/hooks/useIsMounted'
 // Test Auth Component
 const AuthComponent: React.FC<IRouteProps & RouteComponentProps> = ({ children: Children, location, ...rest }) => {
   const currentLocation = useLocation<{ notFoundError: boolean }>()
+
+  useBlock(async () => {
+    NProgress.configure({
+      showSpinner: false
+    })
+    NProgress.start()
+    await sleep()
+    NProgress.done()
+    console.log('🐂', currentLocation.pathname)
+    return {}
+  }, rest)
+
   if (
     rest.redirectUrl &&
     currentLocation.pathname === rest.computedMatch.url
@@ -95,6 +110,48 @@ const RenderComponent: React.FC<IRouteProps & RouteComponentProps> = () => {
       }
     </>
   )
+}
+
+
+/*
+ * Return truthy if you wish to block. Empty return or false will not block
+ */
+export function useBlock<T> (asyncFunc: Function = async () => (''), rest: any) {
+  const { block, push, goBack, goForward, location } = useHistory<{back: string, current: string}>()
+  const todo = useAppState(state => state.todo)
+
+  const lastLocation = useRef<Location>()
+
+  const funcRef = useRef(asyncFunc)
+
+  useEffect(() => {
+    if (
+      location === lastLocation.current ||
+      !funcRef.current ||
+      (
+        rest.redirectUrl &&
+        location.pathname === rest.computedMatch.url
+      )
+    ) return
+
+    lastLocation.current = location
+
+    const unblock = block((location, action) => {
+      const doBlock = async () => {
+
+        const result = await funcRef.current(location, action)
+        if (result) {
+          unblock()
+          push(location)
+        }
+        NProgress.done()
+      }
+
+      doBlock()
+      return false
+    })
+  }, [location, block, push, rest.computedMatch.url, rest.redirectUrl, todo.currentRoute])
+  return <></>
 }
 
 // Class Component

@@ -7,17 +7,20 @@ import { BaseStoreModuleInterface } from '@/store/types'
 export type TodoState = {
   num: number
   waitTime: number
+  currentRoute: string
 }
 export const TODO = {
   INCREASE: 'increase',
   DECREASE: 'decrease',
-  INCREASE_WAIT_TIME: 'increaseWaitTime'
+  INCREASE_WAIT_TIME: 'increaseWaitTime',
+  SET_CURRENT_ROUTE: 'set_current_route'
 }
 
 class TodoModule implements BaseStoreModuleInterface<TodoState> {
   initialState = {
     num: 10,
-    waitTime: 4 // 默认 4 秒钟
+    waitTime: 4, // 默认 4 秒钟
+    currentRoute: ''
   }
 
   reducers = (state = this.initialState, action: AnyAction): TodoState => {
@@ -36,6 +39,11 @@ class TodoModule implements BaseStoreModuleInterface<TodoState> {
         return {
           ...state,
           waitTime: action.data
+        }
+      case TODO.SET_CURRENT_ROUTE:
+        return {
+          ...state,
+          currentRoute: action.data
         }
       default:
         return state
