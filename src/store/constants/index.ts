@@ -8,7 +8,4 @@ export const SYSTEM = {
   INFO: 'INFO'
 }
 
-export const TODO = {
-  INCREASE: 'increase',
-  DECREASE: 'decrease'
-}
+export * from '@/modules/UserAccount/store'

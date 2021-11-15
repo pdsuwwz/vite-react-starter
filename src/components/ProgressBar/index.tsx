@@ -4,7 +4,9 @@ import 'nprogress/nprogress.css'
 
 const ProgressBar: React.FC = function () {
   console.log('😋😋😋😋')
-  NProgress.configure({ showSpinner: true })
+  NProgress.configure({
+    showSpinner: false
+  })
   NProgress.start()
   useEffect(() => {
 
