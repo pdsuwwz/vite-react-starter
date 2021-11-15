@@ -16,6 +16,7 @@ import useIsMounted from '@/hooks/useIsMounted'
 import { sleep } from '@/utils'
 import { TODO } from '@/store/constants'
 import { useAppState } from '@/store'
+import useBlock from '@/hooks/useBlock'
 
 // Functional Component
 // const Routes: React.FC = function () {
@@ -76,11 +77,10 @@ export const NoMatchRoute: React.FC = () => {
   )
 }
 
+
 // export default Routes
 
-
 type Props = ReturnType<typeof mapDispatchToProps>
-
 
 const RenderComponent: React.FC<IRouteProps & RouteComponentProps> = () => {
   const location = useLocation<{ notFoundError: boolean }>()
@@ -112,47 +112,6 @@ const RenderComponent: React.FC<IRouteProps & RouteComponentProps> = () => {
   )
 }
 
-
-/*
- * Return truthy if you wish to block. Empty return or false will not block
- */
-export function useBlock<T> (asyncFunc: Function = async () => (''), rest: any) {
-  const { block, push, goBack, goForward, location } = useHistory<{back: string, current: string}>()
-  const todo = useAppState(state => state.todo)
-
-  const lastLocation = useRef<Location>()
-
-  const funcRef = useRef(asyncFunc)
-
-  useEffect(() => {
-    if (
-      location === lastLocation.current ||
-      !funcRef.current ||
-      (
-        rest.redirectUrl &&
-        location.pathname === rest.computedMatch.url
-      )
-    ) return
-
-    lastLocation.current = location
-
-    const unblock = block((location, action) => {
-      const doBlock = async () => {
-
-        const result = await funcRef.current(location, action)
-        if (result) {
-          unblock()
-          push(location)
-        }
-        NProgress.done()
-      }
-
-      doBlock()
-      return false
-    })
-  }, [location, block, push, rest.computedMatch.url, rest.redirectUrl, todo.currentRoute])
-  return <></>
-}
 
 // Class Component
 class MyRouter extends React.Component<Props> {
