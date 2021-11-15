@@ -62,6 +62,7 @@ const AuthComponent: React.FC<IRouteProps & RouteComponentProps> = ({ children: 
     console.log('🌶  重定向: ', currentLocation.pathname, rest.computedMatch.url)
     return <Redirect to={rest.redirectUrl}></Redirect>
   }
+
   console.log('在这里可以鉴权吧。。。', location.pathname)
   // const hasErrorState = currentLocation && currentLocation.state && currentLocation.state.notFoundError
   // return React.cloneElement(Children, { ...rest })

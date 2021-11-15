@@ -1,5 +1,4 @@
 import { useRef, useEffect } from 'react'
-import { useAppState } from '@/store'
 import { useHistory } from 'react-router-dom'
 import { Location } from 'history'
 import NProgress from 'nprogress'
@@ -11,7 +10,6 @@ import 'nprogress/nprogress.css'
  */
 export default function useBlock<T> (asyncFunc: Function = async () => (''), rest: any) {
   const { block, push, goBack, goForward, location } = useHistory<{back: string, current: string}>()
-  const todo = useAppState(state => state.todo)
 
   const lastLocation = useRef<Location>()
 
@@ -43,5 +41,5 @@ export default function useBlock<T> (asyncFunc: Function = async () => (''), res
       doBlock()
       return false
     })
-  }, [location, block, push, rest.computedMatch.url, rest.redirectUrl, todo.currentRoute])
+  }, [location, block, push, rest.computedMatch.url, rest.redirectUrl])
 }
