@@ -18,29 +18,8 @@ import { TODO } from '@/store/constants'
 import { useAppState } from '@/store'
 import useBlock from '@/hooks/useBlock'
 
-// Functional Component
-// const Routes: React.FC = function () {
-//   const dispatch = useDispatch()
 
-//   useEffect(() => {
-//     dispatch(validateLocalStatus())
-//   }, [])
-
-//   return (
-//       <Router>
-//         <SuspenseContainer>
-//           <Switch>
-//             {routesMap.map((route, idx) => (
-//               <PrivateRoute {...route} key={idx} />
-//             ))}
-//           </Switch>
-//         </SuspenseContainer>
-//       </Router>
-//   )
-// }
-
-
-// Test Auth Component
+// TODO: Auth Component
 const AuthComponent: React.FC<IRouteProps & RouteComponentProps> = ({ children: Children, location, ...rest }) => {
   const currentLocation = useLocation<{ notFoundError: boolean }>()
 
@@ -63,9 +42,7 @@ const AuthComponent: React.FC<IRouteProps & RouteComponentProps> = ({ children: 
     return <Redirect to={rest.redirectUrl}></Redirect>
   }
 
-  console.log('在这里可以鉴权吧。。。', location.pathname)
-  // const hasErrorState = currentLocation && currentLocation.state && currentLocation.state.notFoundError
-  // return React.cloneElement(Children, { ...rest })
+  console.log('Hey there, Authorization, 在这里可以鉴权吧。。。', location.pathname)
   return Children
 }
 const Auth = withRouter(AuthComponent)
@@ -79,18 +56,16 @@ export const NoMatchRoute: React.FC = () => {
 }
 
 
-// export default Routes
-
 type Props = ReturnType<typeof mapDispatchToProps>
 
 const RenderComponent: React.FC<IRouteProps & RouteComponentProps> = () => {
   const location = useLocation<{ notFoundError: boolean }>()
-  const hasErrorState = location && location.state && location.state.notFoundError
-  console.log('是否 404', hasErrorState)
+  const isNotFoundError = location && location.state && location.state.notFoundError
+  console.log('isNotFoundError 404: ', isNotFoundError)
   return (
     <>
       {
-        hasErrorState
+        isNotFoundError
           ? <NoMatchRoute />
           : (
             <SuspenseContainer>
@@ -114,8 +89,7 @@ const RenderComponent: React.FC<IRouteProps & RouteComponentProps> = () => {
 }
 
 
-// Class Component
-class MyRouter extends React.Component<Props> {
+class AppRouter extends React.Component<Props> {
   constructor(props: Props) {
     super(props)
     this.props.validateLocalStatus()
@@ -136,4 +110,4 @@ const mapDispatchToProps = (dispatch: any) => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(MyRouter)
+export default connect(null, mapDispatchToProps)(AppRouter)
