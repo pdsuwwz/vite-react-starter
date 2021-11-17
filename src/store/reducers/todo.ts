@@ -11,18 +11,18 @@ const initialState = {
 
 function todo (state = initialState, action: AnyAction): TodoState {
   switch (action.type) {
-  case TODO.DECREASE:
-    return {
-      ...state,
-      num: action.data
-    }
-  case TODO.INCREASE:
-    return {
-      ...state,
-      num: action.data
-    }
-  default:
-    return state
+    case TODO.DECREASE:
+      return {
+        ...state,
+        num: action.data
+      }
+    case TODO.INCREASE:
+      return {
+        ...state,
+        num: action.data
+      }
+    default:
+      return state
   }
 }
 

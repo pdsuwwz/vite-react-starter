@@ -35,17 +35,17 @@ const initialState: SystemState = {
 
 function system(state = initialState, action: any): SystemState {
   switch (action.type) {
-  case INFO:
-    if (_.isEmpty(action.data)) {
+    case INFO:
+      if (_.isEmpty(action.data)) {
+        return state
+      }
+      action.data.arch = action.data.arch.slice(1)
+      return {
+        ...state,
+        info: action.data
+      }
+    default:
       return state
-    }
-    action.data.arch = action.data.arch.slice(1)
-    return {
-      ...state,
-      info: action.data
-    }
-  default:
-    return state
   }
 }
 
