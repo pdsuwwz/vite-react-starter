@@ -17,6 +17,7 @@ import {
 } from '@ant-design/icons'
 
 import srcLogo from '@/assets/images/react.svg'
+import { sleep } from '@/utils'
 
 type ThunkDispatchProps = ThunkDispatch<{}, {}, AnyAction>
 type LoginProps = {
@@ -36,28 +37,29 @@ const LoginPage: React.FC<LoginProps> = function () {
   })
 
   const handleSubmit = async () => {
-    try {
-      const values = await form.validateFields()
+    await sleep()
+    history.replace('/nested')
+    // try {
+    //   const values = await form.validateFields()
 
-      setLoading(true)
-      serviceLogin({
-        userName: values.userName.trim(),
-        password: values.password.trim(),
-        code: values.code.trim()
-      })
-        .then(res => {
-          setLoading(false)
-          if (res.data.success) {
-            dispatch(setUser(res.data.data.userInfo))
-            history.replace(redirectUrl)
-          }
-        })
-        .catch(() => {
-          setLoading(false)
-        })
-    } catch (err) {
-      console.log(err)
-    }
+    //   setLoading(true)
+    //   serviceLogin({
+    //     userName: values.userName.trim(),
+    //     password: values.password.trim()
+    //   })
+    //     .then(res => {
+    //       setLoading(false)
+    //       if (res.data.success) {
+    //         dispatch(setUser(res.data.data.userInfo))
+    //         history.replace(redirectUrl)
+    //       }
+    //     })
+    //     .catch(() => {
+    //       setLoading(false)
+    //     })
+    // } catch (err) {
+    //   console.log(err)
+    // }
   }
 
   useEffect(() => {
@@ -86,7 +88,7 @@ const LoginPage: React.FC<LoginProps> = function () {
         password: '123456'
       })
     }
-  }, [])
+  }, [form])
 
   return (
     <section className="login-page">

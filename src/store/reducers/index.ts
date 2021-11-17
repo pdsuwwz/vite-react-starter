@@ -14,5 +14,5 @@ export interface StoreState {
 export default combineReducers<StoreState>({
   user,
   system,
-  todo: todo.reducers
+  todo: todo.reducer
 })

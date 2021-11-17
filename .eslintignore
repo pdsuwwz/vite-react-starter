@@ -7,6 +7,7 @@
 /lib
 /dist
 /public
+/src/assets/fonts/
 /node_modules
 /tests
 __tests__

@@ -3,24 +3,41 @@ import { sleep } from '@/utils'
 import { RespData } from '@/utils/http'
 import { BaseStoreModuleInterface } from '@/store/types'
 
+interface oldStateTypes {
+  back: string | null,
+  current: string | null,
+  forward: string | null,
+  position: number | null,
+  replaced: boolean,
+}
 
 export type TodoState = {
   num: number
   waitTime: number
+  oldState: oldStateTypes
 }
 export const TODO = {
   INCREASE: 'increase',
   DECREASE: 'decrease',
-  INCREASE_WAIT_TIME: 'increaseWaitTime'
+  INCREASE_WAIT_TIME: 'increaseWaitTime',
+  SET_HISTORY_OLD_STATE: 'setHistoryOldState'
 }
 
 class TodoModule implements BaseStoreModuleInterface<TodoState> {
-  initialState = {
+  initialState: TodoState = {
     num: 10,
-    waitTime: 4 // 默认 4 秒钟
+    waitTime: 4, // 默认 4 秒钟
+    oldState: {
+      back: null,
+      current: null,
+      forward: null,
+      // the length is off by one, we need to decrease it
+      position: history.length - 1,
+      replaced: true
+    }
   }
 
-  reducers = (state = this.initialState, action: AnyAction): TodoState => {
+  reducer = (state = this.initialState, action: AnyAction): TodoState => {
     switch (action.type) {
       case TODO.DECREASE:
         return {
@@ -36,6 +53,11 @@ class TodoModule implements BaseStoreModuleInterface<TodoState> {
         return {
           ...state,
           waitTime: action.data
+        }
+      case TODO.SET_HISTORY_OLD_STATE:
+        return {
+          ...state,
+          oldState: action.data
         }
       default:
         return state

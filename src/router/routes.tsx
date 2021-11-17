@@ -15,17 +15,6 @@ export const lazyMinLoadTime = <T extends ComponentType<any>>(factory: () => Pro
 const DefaultLayout = lazy(() => import('@/components/Layout/index'))
 const BlankLayout = lazy(() => import('@/components/Layout/blank'))
 
-const RedirectRoot: React.FC = () => {
-  return (
-    <Redirect
-      from="/"
-      to={{
-        pathname: '/nested'
-      }}
-    />
-  )
-}
-
 const routesMap: IRouteProps[] = [
   {
     path: '/',
@@ -59,11 +48,7 @@ const routesMap: IRouteProps[] = [
       },
       {
         path: '/nested/:dynamic',
-        // exact: true,
         component: lazy(() => import('@/modules/Nested/pages/nested-dynamic')),
-        meta: {
-          title: '嵌套动态根路由 - 子路由'
-        },
         childrenRoutes: [
           {
             path: '/nested/:dynamic',
@@ -133,14 +118,6 @@ const routesMap: IRouteProps[] = [
     path: '/404',
     component: NoMatch
   }
-  // {
-  //   path: HOME.NO_MATCH.path,
-  //   component: NoMatch,
-  //   meta: {
-  //     requiresAuth: false,
-  //     title: HOME.NO_MATCH.name
-  //   }
-  // }
 ]
 
 export default routesMap
