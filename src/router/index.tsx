@@ -23,16 +23,17 @@ import useBlock from '@/hooks/useBlock'
 const AuthComponent: React.FC<IRouteProps & RouteComponentProps> = ({ children: Children, location, ...rest }) => {
   const currentLocation = useLocation<{ notFoundError: boolean }>()
 
-  useBlock(async () => {
-    NProgress.configure({
-      showSpinner: false
-    })
-    NProgress.start()
-    await sleep()
-    NProgress.done()
-    console.log('🐂', currentLocation.pathname)
-    return {}
-  }, rest)
+  // TODO: Does not support popstate.
+  // useBlock(async () => {
+  //   NProgress.configure({
+  //     showSpinner: false
+  //   })
+  //   NProgress.start()
+  //   await sleep()
+  //   NProgress.done()
+  //   console.log('🐂', currentLocation.pathname)
+  //   return {}
+  // }, rest)
 
   if (
     rest.redirectUrl &&
