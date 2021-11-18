@@ -15,6 +15,7 @@ export type TodoState = {
   num: number
   waitTime: number
   oldState: oldStateTypes
+  userInfo: any
 }
 
 export const TODO = createActionTypes(
@@ -23,7 +24,8 @@ export const TODO = createActionTypes(
     INCREASE: 'increase',
     DECREASE: 'decrease',
     INCREASE_WAIT_TIME: 'increaseWaitTime',
-    SET_HISTORY_OLD_STATE: 'setHistoryOldState'
+    SET_HISTORY_OLD_STATE: 'setHistoryOldState',
+    GET_USER_INFO: 'getUserInfo'
   }
 )
 
@@ -39,7 +41,8 @@ class TodoModule implements BaseStoreModuleInterface<TodoState> {
       // the length is off by one, we need to decrease it
       position: history.length - 1,
       replaced: true
-    }
+    },
+    userInfo: {}
   }
 
   reducer = (state = this.initialState, action: AnyAction): TodoState => {
@@ -63,6 +66,11 @@ class TodoModule implements BaseStoreModuleInterface<TodoState> {
         return {
           ...state,
           oldState: action.data
+        }
+      case TODO.GET_USER_INFO:
+        return {
+          ...state,
+          userInfo: action.data
         }
       default:
         return state
