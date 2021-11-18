@@ -1,7 +1,7 @@
 import { AnyAction, Dispatch } from 'redux'
 import { sleep } from '@/utils'
 import { RespData } from '@/utils/http'
-import { BaseStoreModuleInterface } from '@/store/types'
+import { BaseStoreModuleInterface, createActionTypes } from '@/store/types'
 
 interface oldStateTypes {
   back: string | null,
@@ -16,12 +16,17 @@ export type TodoState = {
   waitTime: number
   oldState: oldStateTypes
 }
-export const TODO = {
-  INCREASE: 'increase',
-  DECREASE: 'decrease',
-  INCREASE_WAIT_TIME: 'increaseWaitTime',
-  SET_HISTORY_OLD_STATE: 'setHistoryOldState'
-}
+
+export const TODO = createActionTypes(
+  'UserAccount',
+  {
+    INCREASE: 'increase',
+    DECREASE: 'decrease',
+    INCREASE_WAIT_TIME: 'increaseWaitTime',
+    SET_HISTORY_OLD_STATE: 'setHistoryOldState'
+  }
+)
+
 
 class TodoModule implements BaseStoreModuleInterface<TodoState> {
   initialState: TodoState = {
