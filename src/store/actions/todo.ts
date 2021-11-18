@@ -2,7 +2,7 @@ import { TODO } from '@/store/constants'
 import { serviceGetSystemInfo } from '@/services'
 import { AnyAction, Dispatch } from 'redux'
 import { sleep } from '@/utils'
-import { RespData } from '@/utils/http'
+import { RespData } from '@/utils/request'
 import { AppState } from '..'
 
 

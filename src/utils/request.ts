@@ -7,6 +7,17 @@ import { camelizeKeys, decamelizeKeys } from '@/utils/camelCase'
 function errorRedirect (url: string) {
   location.replace(`/${url}`)
 }
+
+export interface RespData {
+  success?: boolean
+  errorCode?: number
+  error?: number | string | null
+  msg?: string
+  data?: any
+  [key: string]: any
+}
+
+
 // code Message
 export const codeMessage: any = {
   // 200: '服务器成功返回请求的数据。',

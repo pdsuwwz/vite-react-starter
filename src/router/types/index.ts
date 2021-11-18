@@ -1,7 +1,6 @@
 interface IMetaProps {
   title?: string;
-  requiresAuth?: boolean;
-  isLoginToHome?: boolean;
+  name?: string;
 }
 
 interface IRedirectProps {

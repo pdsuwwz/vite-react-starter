@@ -4,7 +4,7 @@ import store from '@/store'
 import { message, notification } from 'antd'
 import { logout } from '@/store/actions'
 
-export interface RespData {
+interface CallRespData {
   success?: boolean
   errorCode?: number
   error?: number | string | null
@@ -65,7 +65,7 @@ httpInstance.interceptors.request.use(function (config) {
 
 httpInstance.interceptors.response.use(function (res) {
   const headers = res.config.headers
-  const data: RespData = res.data
+  const data: CallRespData = res.data
 
   // if (!data.success && headers.errorAlert) {
   //   notification.error({

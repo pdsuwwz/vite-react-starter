@@ -17,6 +17,7 @@ import { sleep } from '@/utils'
 import { TODO } from '@/store/constants'
 import { useAppState } from '@/store'
 import useBlock from '@/hooks/useBlock'
+import PermissionAuthorization from '@/router/permission'
 
 
 // TODO: Auth Component
@@ -44,7 +45,13 @@ const AuthComponent: React.FC<IRouteProps & RouteComponentProps> = ({ children: 
   }
 
   console.log('Hey there, Authorization, 在这里可以鉴权吧。。。', location.pathname)
-  return Children
+  return (
+    <>
+      <PermissionAuthorization {...rest}>
+        { Children }
+      </PermissionAuthorization>
+    </>
+  )
 }
 const Auth = withRouter(AuthComponent)
 
@@ -59,7 +66,7 @@ export const NoMatchRoute: React.FC = () => {
 
 type Props = ReturnType<typeof mapDispatchToProps>
 
-const RenderComponent: React.FC<IRouteProps & RouteComponentProps> = () => {
+const RenderComponent: React.FC = () => {
   const location = useLocation<{ notFoundError: boolean }>()
   const isNotFoundError = location && location.state && location.state.notFoundError
   console.log('isNotFoundError 404: ', isNotFoundError)
@@ -98,8 +105,9 @@ class AppRouter extends React.Component<Props> {
   render() {
     return (
       <Router>
-        <Route component={ RenderComponent }
-        ></Route>
+        <Route>
+          <RenderComponent />
+        </Route>
       </Router>
     )
   }
