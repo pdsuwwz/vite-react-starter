@@ -3,7 +3,7 @@ import CONFIG from '@/config'
 import { Switch, Route, Redirect, useRouteMatch, useHistory, useLocation } from 'react-router-dom'
 import { IRouteProps } from '@/router/types'
 import { connect } from 'react-redux'
-import { StoreState } from '@/store/index'
+import { StoreState } from '@/store'
 import SuspenseContainer from '@/shared/SuspenseContainer'
 
 
