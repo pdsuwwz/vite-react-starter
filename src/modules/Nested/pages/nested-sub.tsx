@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom'
 import { message, Button } from 'antd'
 import { useAppDispatch, useAppState } from '@/store'
 
+import IconFont from '@/components/IconFont'
+
 import { TODO } from '@/store/constants'
 import TodoModule from '@/modules/UserAccount/store'
 import { sleep } from '@/utils'
@@ -83,13 +85,16 @@ const SubNested: React.FC<IRouteProps> = (
           <Button
             type="primary"
             onClick={ decrease }
+            icon={
+              <IconFont icon="iconsearch" />
+            }
           >
             减 1
           </Button>
           <Button
             type="primary"
             loading={isLoading}
-            onClick={ increaseAsync }
+            onClick={increaseAsync}
           >
             等待 { waitTime } 秒， async 加 300
           </Button>

@@ -7,6 +7,7 @@
     "build",
     "dist",
     "scripts",
+    "src/assets",
     "webpack",
     "jest"
   ],

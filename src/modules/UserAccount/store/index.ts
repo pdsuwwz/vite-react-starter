@@ -1,6 +1,6 @@
 import { AnyAction, Dispatch } from 'redux'
 import { sleep } from '@/utils'
-import { RespData } from '@/utils/request'
+import { filterResponse, RespData } from '@/utils/request'
 import { BaseStoreModuleInterface, createActionTypes } from '@/store/types'
 
 interface oldStateTypes {
@@ -44,7 +44,9 @@ class TodoModule implements BaseStoreModuleInterface<TodoState> {
       position: history.length - 1,
       replaced: true
     },
-    userInfo: {},
+    userInfo: {
+      user: {}
+    },
     authLoading: true
   }
 
@@ -140,8 +142,11 @@ class TodoModule implements BaseStoreModuleInterface<TodoState> {
 
         // TODO: Fetch API mock
         const mockResponse = {
-          username: 'admin',
-          token: 'abcd-abcd-abcd-abcd'
+          user: {
+            username: 'admin',
+            email: 'vite.admin@gmail.com',
+            token: 'abcd-abcd-abcd-abcd'
+          }
         }
 
         dispatch({
@@ -151,11 +156,40 @@ class TodoModule implements BaseStoreModuleInterface<TodoState> {
 
         console.log('fetch UserInfo API: 假定拿到为: ', mockResponse)
 
-        return {
+        return filterResponse({
           data: mockResponse,
           error: 0,
           msg: 'ok'
+        })
+      }
+    },
+    login () {
+      return async (dispatch: Dispatch, getState: any): Promise<RespData> => {
+
+        await sleep(1000)
+
+        // TODO: Fetch API mock
+        const mockResponse = {
+          user: {
+            username: 'admin',
+            email: 'vite.admin@gmail.com',
+            token: 'abcd-abcd-abcd-abcd'
+          }
         }
+
+        const result = Math.random() > 0.5
+          ? {
+            data: mockResponse,
+            error: 0,
+            msg: 'ok'
+          }
+          :
+          {
+            error: 1,
+            msg: '(Mock) 登录失效，请重试'
+          }
+
+        return filterResponse(result)
       }
     }
   }
