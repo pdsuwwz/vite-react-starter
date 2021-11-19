@@ -8,7 +8,7 @@ import { useAppDispatch, useAppState } from '@/store'
 import { TODO } from '@/store/constants'
 import TodoModule from '@/modules/UserAccount/store'
 import { sleep } from '@/utils'
-import { RespData } from '@/utils/http'
+import { RespData } from '@/utils/request'
 import useIsMounted from '@/hooks/useIsMounted'
 
 import styles from '@/modules/Nested/styles/nested-sub.module.scss'

@@ -5,7 +5,7 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 
 /**
- * @description Hook function that blocks routing changes
+ * @description Hook function that blocks routing changes, TODO: Does not support popstate event changes 🙁
  * @param asyncFunc Return truthy if you wish to block. Empty return or false will not block
  */
 export default function useBlock<T> (asyncFunc: Function = async () => (''), rest: any) {

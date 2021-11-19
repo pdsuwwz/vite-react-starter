@@ -11,7 +11,7 @@ const BlankLayout: React.FC<IRouteProps> = (
     ...rest
   }
 ) => {
-  console.log('空白路由节点', rest)
+  // console.log('空白路由节点', rest)
   return (
     <>
       <Route

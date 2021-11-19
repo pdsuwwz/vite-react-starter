@@ -12,11 +12,15 @@ export interface BaseStoreModuleInterface<T> {
   actions: fnActions;
 }
 
+type actionTypes<K extends string> = Record<K, string>
 
-export const createActionTypes = <K extends string>(namespace: string, constants: Record<K, string>): Record<K, string> => {
-  const result: Partial<Record<K, string>> = {}
+export const createActionTypes = <K extends string>(
+  namespace: string,
+  constants: actionTypes<K>
+): actionTypes<K> => {
+  const result: Partial<actionTypes<K>> = {}
   for (const key in constants) {
     result[key] = `${namespace}/${constants[key]}`
   }
-  return result as Record<K, string>
+  return result as actionTypes<K>
 }

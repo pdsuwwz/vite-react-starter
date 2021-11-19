@@ -16,24 +16,12 @@ import useIsMounted from '@/hooks/useIsMounted'
 import { sleep } from '@/utils'
 import { TODO } from '@/store/constants'
 import { useAppState } from '@/store'
-import useBlock from '@/hooks/useBlock'
+import PermissionAuthorization from '@/router/permission'
 
 
 // TODO: Auth Component
 const AuthComponent: React.FC<IRouteProps & RouteComponentProps> = ({ children: Children, location, ...rest }) => {
   const currentLocation = useLocation<{ notFoundError: boolean }>()
-
-  // TODO: Does not support popstate.
-  // useBlock(async () => {
-  //   NProgress.configure({
-  //     showSpinner: false
-  //   })
-  //   NProgress.start()
-  //   await sleep()
-  //   NProgress.done()
-  //   console.log('🐂', currentLocation.pathname)
-  //   return {}
-  // }, rest)
 
   if (
     rest.redirectUrl &&
@@ -44,7 +32,13 @@ const AuthComponent: React.FC<IRouteProps & RouteComponentProps> = ({ children: 
   }
 
   console.log('Hey there, Authorization, 在这里可以鉴权吧。。。', location.pathname)
-  return Children
+  return (
+    <>
+      <PermissionAuthorization {...rest}>
+        { Children }
+      </PermissionAuthorization>
+    </>
+  )
 }
 const Auth = withRouter(AuthComponent)
 
@@ -59,7 +53,7 @@ export const NoMatchRoute: React.FC = () => {
 
 type Props = ReturnType<typeof mapDispatchToProps>
 
-const RenderComponent: React.FC<IRouteProps & RouteComponentProps> = () => {
+const RenderComponent: React.FC = () => {
   const location = useLocation<{ notFoundError: boolean }>()
   const isNotFoundError = location && location.state && location.state.notFoundError
   console.log('isNotFoundError 404: ', isNotFoundError)
@@ -98,8 +92,9 @@ class AppRouter extends React.Component<Props> {
   render() {
     return (
       <Router>
-        <Route component={ RenderComponent }
-        ></Route>
+        <Route>
+          <RenderComponent />
+        </Route>
       </Router>
     )
   }

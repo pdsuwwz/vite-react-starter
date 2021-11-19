@@ -16,3 +16,15 @@ pre {
 em {
   font-style: normal;
 }
+
+
+.spin-global-loading {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999999;
+  background-color: rgba(#fff, 0.7);
+}

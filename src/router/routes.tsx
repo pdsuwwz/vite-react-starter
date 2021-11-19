@@ -82,13 +82,17 @@ const routesMap: IRouteProps[] = [
     path: '/user',
     component: DefaultLayout,
     redirectUrl: '/user/login',
+    meta: {
+      name: 'UserLogin'
+    },
     childrenRoutes: [
       {
         path: '/user/login',
         exact: true,
         component: lazy(() => import('@/modules/UserAccount/pages/login')),
         meta: {
-          title: '登录'
+          title: '登录',
+          name: 'UserLogin'
         }
       },
       {

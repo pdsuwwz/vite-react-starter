@@ -1,6 +1,6 @@
 import { AnyAction, Dispatch } from 'redux'
 import { sleep } from '@/utils'
-import { RespData } from '@/utils/http'
+import { RespData } from '@/utils/request'
 import { BaseStoreModuleInterface, createActionTypes } from '@/store/types'
 
 interface oldStateTypes {
@@ -15,6 +15,8 @@ export type TodoState = {
   num: number
   waitTime: number
   oldState: oldStateTypes
+  userInfo: any
+  authLoading: boolean
 }
 
 export const TODO = createActionTypes(
@@ -23,7 +25,9 @@ export const TODO = createActionTypes(
     INCREASE: 'increase',
     DECREASE: 'decrease',
     INCREASE_WAIT_TIME: 'increaseWaitTime',
-    SET_HISTORY_OLD_STATE: 'setHistoryOldState'
+    SET_HISTORY_OLD_STATE: 'setHistoryOldState',
+    SET_USER_INFO: 'setUserInfo',
+    SET_AUTH_LOADING: 'setAuthLoading'
   }
 )
 
@@ -39,7 +43,9 @@ class TodoModule implements BaseStoreModuleInterface<TodoState> {
       // the length is off by one, we need to decrease it
       position: history.length - 1,
       replaced: true
-    }
+    },
+    userInfo: {},
+    authLoading: true
   }
 
   reducer = (state = this.initialState, action: AnyAction): TodoState => {
@@ -63,6 +69,16 @@ class TodoModule implements BaseStoreModuleInterface<TodoState> {
         return {
           ...state,
           oldState: action.data
+        }
+      case TODO.SET_USER_INFO:
+        return {
+          ...state,
+          userInfo: action.data
+        }
+      case TODO.SET_AUTH_LOADING:
+        return {
+          ...state,
+          authLoading: action.data
         }
       default:
         return state
@@ -116,6 +132,31 @@ class TodoModule implements BaseStoreModuleInterface<TodoState> {
     },
     increaseWaitTime(data: any) {
       return { type: TODO.INCREASE_WAIT_TIME, data }
+    },
+    getUserInfoData() {
+      return async (dispatch: Dispatch, getState: any): Promise<RespData> => {
+
+        await sleep(1000)
+
+        // TODO: Fetch API mock
+        const mockResponse = {
+          username: 'admin',
+          token: 'abcd-abcd-abcd-abcd'
+        }
+
+        dispatch({
+          type: TODO.SET_USER_INFO,
+          data: mockResponse
+        })
+
+        console.log('fetch UserInfo API: 假定拿到为: ', mockResponse)
+
+        return {
+          data: mockResponse,
+          error: 0,
+          msg: 'ok'
+        }
+      }
     }
   }
 }
