@@ -136,7 +136,7 @@ class TodoModule implements BaseStoreModuleInterface<TodoState> {
     getUserInfoData() {
       return async (dispatch: Dispatch, getState: any): Promise<RespData> => {
 
-        await sleep(400)
+        await sleep(1000)
 
         // TODO: Fetch API mock
         const mockResponse = {

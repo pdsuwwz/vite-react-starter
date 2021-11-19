@@ -16,25 +16,12 @@ import useIsMounted from '@/hooks/useIsMounted'
 import { sleep } from '@/utils'
 import { TODO } from '@/store/constants'
 import { useAppState } from '@/store'
-import useBlock from '@/hooks/useBlock'
 import PermissionAuthorization from '@/router/permission'
 
 
 // TODO: Auth Component
 const AuthComponent: React.FC<IRouteProps & RouteComponentProps> = ({ children: Children, location, ...rest }) => {
   const currentLocation = useLocation<{ notFoundError: boolean }>()
-
-  // TODO: Does not support popstate.
-  // useBlock(async () => {
-  //   NProgress.configure({
-  //     showSpinner: false
-  //   })
-  //   NProgress.start()
-  //   await sleep()
-  //   NProgress.done()
-  //   console.log('🐂', currentLocation.pathname)
-  //   return {}
-  // }, rest)
 
   if (
     rest.redirectUrl &&

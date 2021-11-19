@@ -21,8 +21,7 @@ const ProgressBar: React.FC = function () {
 
 const SuspenseContainer: React.FC = ({ children: Children }) => {
   return (
-    // <Suspense fallback={<ProgressBar />}>{Children}</Suspense>
-    <Suspense fallback={<></>}>{Children}</Suspense>
+    <Suspense fallback={<ProgressBar />}>{Children}</Suspense>
   )
 }
 

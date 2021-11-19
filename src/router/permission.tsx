@@ -4,36 +4,27 @@ import { useAppDispatch, useAppState } from '@/store'
 import { RespData } from '@/utils/request'
 import { TODO } from '@/store/constants'
 import TodoModule from '@/modules/UserAccount/store'
-import NProgress from 'nprogress'
-import 'nprogress/nprogress.css'
 import { Spin } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
 
 import { IRouteProps } from '@/router/types'
+import { allowlist } from '@/router/auth-list'
 
 const PermissionAuthorization: React.FC<IRouteProps> = ({ children: Children, ...rest }) => {
   const dispatch = useAppDispatch()
   const location = useLocation()
-  const routeMatch = useRouteMatch()
-  const history = useHistory()
 
   const { authLoading } = useAppState(state => state.todo)
 
-  NProgress.configure({
-    showSpinner: false
-  })
-
-  const cancelLoading = () => {
-    dispatch({
-      type: TODO.SET_AUTH_LOADING,
-      data: false
-    })
+  const handleCancelLoading = () => {
     setTimeout(() => {
-      NProgress.done()
+      dispatch({
+        type: TODO.SET_AUTH_LOADING,
+        data: false
+      })
     })
   }
   const handleGetUserInfo = async () => {
-    NProgress.start()
     dispatch({
       type: TODO.SET_AUTH_LOADING,
       data: true
@@ -41,19 +32,24 @@ const PermissionAuthorization: React.FC<IRouteProps> = ({ children: Children, ..
 
     const { error, data }: RespData = await dispatch(TodoModule.actions.getUserInfoData())
 
-    cancelLoading()
+    handleCancelLoading()
   }
 
   useEffect(() => {
-    if (rest.meta?.name === 'UserLogin') {
-      cancelLoading()
+    const metaName = rest.meta?.name
+    if (
+      allowlist.find(
+        name => metaName === name
+      )
+    ) {
+      handleCancelLoading()
       return
     }
 
     console.log('🛡', Math.random())
 
     handleGetUserInfo()
-  }, [dispatch, location ])
+  }, [dispatch, location])
 
 
   return (
