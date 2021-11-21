@@ -11,7 +11,13 @@ const DefaultLayout: React.FC<IRouteProps> = (
   console.log('Component', rest)
   return (
     <>
-      <div style={
+      <Route
+        {...rest}
+        render={
+          () => Children
+        }
+      />
+      {/* <div style={
         {
           border: '1px solid red'
         }
@@ -23,7 +29,7 @@ const DefaultLayout: React.FC<IRouteProps> = (
             () => Children
           }
         />
-      </div>
+      </div> */}
     </>
     // <Route
     //   path={rest.path}

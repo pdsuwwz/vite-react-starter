@@ -128,9 +128,9 @@ const LoginPage: React.FC = () => {
             </Form.Item>
           </Form>
 
-          <div className="register">
+          {/* <div className="register">
             <span>注册账号</span>
-          </div>
+          </div> */}
         </div>
       </div>
       <Footer />
