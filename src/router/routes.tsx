@@ -19,11 +19,8 @@ const routesMap: IRouteProps[] = [
   {
     path: '/',
     exact: true,
-    redirectUrl: '/user',
-    component: DefaultLayout,
-    meta: {
-      title: '根目录'
-    }
+    redirectUrl: '/nested',
+    component: DefaultLayout
   },
   {
     path: '/nested',

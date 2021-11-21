@@ -1,94 +1,56 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
+import Cookie from 'js-cookie'
 import '@/modules/UserAccount/styles/login.scss'
 import Footer from '@/components/Footer'
-import qs from 'query-string'
 import config from '@/config'
-import { isEmpty } from 'lodash'
-import { Button, Input, message, Popover, Form } from 'antd'
+import { Button, Input, Form } from 'antd'
 import { useHistory, useLocation } from 'react-router-dom'
-import { DispatchProp, useDispatch } from 'react-redux'
-import { ThunkDispatch } from 'redux-thunk'
-import { AnyAction } from 'redux'
-import { loginByToken, setUser } from '@/store/actions'
-import { serviceLogin } from '@/services'
+
 import {
   LockOutlined,
-  UserOutlined
+  UserOutlined,
+  EyeTwoTone,
+  EyeInvisibleOutlined
 } from '@ant-design/icons'
 
 import srcLogo from '@/assets/images/react.svg'
-import { sleep } from '@/utils'
 
-type ThunkDispatchProps = ThunkDispatch<{}, {}, AnyAction>
-type LoginProps = {
-  dispatch: ThunkDispatchProps
-} & DispatchProp
+import { RespData } from '@/utils/request'
+import { useAppDispatch } from '@/store'
+import TodoModule from '@/modules/UserAccount/store'
 
 
-const LoginPage: React.FC<LoginProps> = function () {
+const LoginPage: React.FC = () => {
   const history = useHistory()
+  const dispatch = useAppDispatch()
   const location = useLocation()
-  const dispatch = useDispatch<any>()
   const [form] = Form.useForm()
   const [loading, setLoading] = useState(false)
-  const [redirectUrl] = useState(() => {
-    const url = qs.parse(location.search).redirectUrl as string
-    return url || '/'
-  })
 
   const handleSubmit = async () => {
-    await sleep()
-    history.replace('/nested')
-    // try {
-    //   const values = await form.validateFields()
+    setLoading(true)
 
-    //   setLoading(true)
-    //   serviceLogin({
-    //     userName: values.userName.trim(),
-    //     password: values.password.trim()
-    //   })
-    //     .then(res => {
-    //       setLoading(false)
-    //       if (res.data.success) {
-    //         dispatch(setUser(res.data.data.userInfo))
-    //         history.replace(redirectUrl)
-    //       }
-    //     })
-    //     .catch(() => {
-    //       setLoading(false)
-    //     })
-    // } catch (err) {
-    //   console.log(err)
-    // }
-  }
-
-  useEffect(() => {
-    const query = qs.parse(location.search)
-    const { token, state } = query
-
-    if (Number(state) === 0) {
-      message.error('授权失败，请重新登录')
+    const { error, data }: RespData = await dispatch(TodoModule.actions.login())
+    if (error) {
+      setLoading(false)
       return
     }
 
-    if (token) {
-      dispatch(loginByToken(token as string))
-        .then((res: any) => {
-          if (!isEmpty(res.userInfo)) {
-            history.replace(redirectUrl)
-          }
-        })
-    }
-  }, [history, location.search, dispatch, redirectUrl])
+    Cookie.set('token', data.user.token)
+    Cookie.set('name', data.user.username)
+    history.replace('/nested')
+  }
 
   useEffect(() => {
     if (config.isDevelopment) {
       form.setFieldsValue({
+        email: 'vite.admin@gmail.com',
         userName: 'admin',
-        password: '123456'
+        password: ''
       })
     }
   }, [form])
+
 
   return (
     <section className="login-page">
@@ -103,23 +65,27 @@ const LoginPage: React.FC<LoginProps> = function () {
             <em>{config.title}</em>
           </div>
 
-          <Form form={form}>
+          <Form
+            form={form}
+            onFinish={handleSubmit}
+            autoComplete="off"
+          >
             <Form.Item
-              name="userName"
+              name="email"
               initialValue="123"
               rules={[
                 {
                   required: true,
-                  message: '请输入用户名'
+                  message: '请输入邮箱'
                 }
               ]}
             >
               <Input
-                placeholder="用户名"
+                placeholder="邮箱"
+                allowClear
                 prefix={<UserOutlined />}
                 maxLength={32}
                 autoComplete="off"
-                onPressEnter={handleSubmit}
               />
             </Form.Item>
 
@@ -132,30 +98,39 @@ const LoginPage: React.FC<LoginProps> = function () {
                 }
               ]}
             >
-              <Input
-                placeholder="密码"
+              <Input.Password
+                placeholder="密码随便"
+                autoFocus
                 prefix={<LockOutlined />}
+                iconRender={
+                  visible => (
+                    visible
+                      ? <EyeTwoTone />
+                      : <EyeInvisibleOutlined />
+                  )
+                }
                 maxLength={32}
                 type="password"
                 autoComplete="off"
-                onPressEnter={handleSubmit}
               />
+            </Form.Item>
+            <Form.Item>
+              <Button
+                type="primary"
+                style={{ marginTop: '20px' }}
+                size="large"
+                loading={loading}
+                block
+                htmlType="submit"
+              >
+                {loading ? '登录中...' : '登录'}
+              </Button>
             </Form.Item>
           </Form>
 
-          <Button
-            type="primary"
-            style={{ marginTop: '20px' }}
-            size="large"
-            loading={loading}
-            block
-            onClick={handleSubmit}
-          >
-            {loading ? '登 录 中...' : '登 录'}
-          </Button>
-          <div className="register">
+          {/* <div className="register">
             <span>注册账号</span>
-          </div>
+          </div> */}
         </div>
       </div>
       <Footer />

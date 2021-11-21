@@ -1,6 +1,8 @@
 import axios from 'axios'
 import Cookie from 'js-cookie'
 
+import { message } from 'antd'
+
 import { camelizeKeys, decamelizeKeys } from '@/utils/camelCase'
 
 // redirect error
@@ -15,6 +17,26 @@ export interface RespData {
   msg?: string
   data?: any
   [key: string]: any
+}
+
+export function filterResponse(
+  res: RespData,
+  successCallback?: Function | null,
+  errorCallback?: Function | null
+) : Promise<RespData> {
+  return new Promise((resolve) => {
+    if (res && res.error === 0) {
+      successCallback && successCallback(res)
+    } else {
+      errorCallback
+        ? errorCallback(res)
+        : message.error({
+          type: 'error',
+          content: res.msg
+        })
+    }
+    resolve(res)
+  })
 }
 
 

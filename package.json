@@ -12,7 +12,7 @@
   "scripts": {
     "serve": "vite --host",
     "build": "tsc && vite build",
-    "preview": "vite preview",
+    "preview": "vite preview --host",
     "lint": "tsc --pretty && eslint ./src --ext .js,.jsx,.tsx,.ts",
     "lint:fix": "tsc --pretty && eslint --fix --cache --ext .js,.jsx,.tsx,.ts ./src"
   },

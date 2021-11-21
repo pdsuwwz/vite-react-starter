@@ -16,7 +16,7 @@ import useIsMounted from '@/hooks/useIsMounted'
 import { sleep } from '@/utils'
 import { TODO } from '@/store/constants'
 import { useAppState } from '@/store'
-import PermissionAuthorization from '@/router/permission'
+import Permission from '@/router/permission'
 
 
 // TODO: Auth Component
@@ -34,9 +34,9 @@ const AuthComponent: React.FC<IRouteProps & RouteComponentProps> = ({ children: 
   console.log('Hey there, Authorization, 在这里可以鉴权吧。。。', location.pathname)
   return (
     <>
-      <PermissionAuthorization {...rest}>
+      <Permission {...rest}>
         { Children }
-      </PermissionAuthorization>
+      </Permission>
     </>
   )
 }

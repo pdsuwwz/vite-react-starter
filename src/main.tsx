@@ -1,24 +1,28 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import '@/styles/global.scss'
-import AppRouter from '@/router'
 import { Provider } from 'react-redux'
+import store from '@/store'
+import AppRouter from '@/router'
+
 import { ConfigProvider } from 'antd'
 import zh_CN from 'antd/lib/locale-provider/zh_CN'
+
 import moment from 'moment'
 import 'moment/dist/locale/zh-cn'
-import store from '@/store'
+
+import '@/styles/global.scss'
+import '@/assets/fonts'
 
 moment.locale('zh-cn')
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <ConfigProvider locale={zh_CN}>
-        <AppRouter />
-      </ConfigProvider>
-    </Provider>
-  </React.StrictMode>
+  <Provider store={store}>
+    <ConfigProvider locale={zh_CN}>
+      <AppRouter />
+    </ConfigProvider>
+  </Provider>
+  // <React.StrictMode>
+  // </React.StrictMode>
   ,
   document.getElementById('root-app')
 )

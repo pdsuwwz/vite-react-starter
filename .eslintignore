@@ -14,5 +14,7 @@ __tests__
 *.json
 /e2e
 /assets
+**/index.html
+**/index.*.html
 .github
 .vscode
