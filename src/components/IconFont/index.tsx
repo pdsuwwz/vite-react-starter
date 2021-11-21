@@ -17,7 +17,7 @@ const IconFont: React.FC<IconFontProps> = (props) => {
     props?.onClick?.()
   }
 
-  const getSvgClassneme = useMemo(() => {
+  const getSvgClassname = useMemo(() => {
     const result = []
     if (props.verticalCenter) {
       result.push('middle')
@@ -45,7 +45,7 @@ const IconFont: React.FC<IconFontProps> = (props) => {
       aria-hidden="true"
       onClick={ handleClick }
       className={
-        `icon-font${getSvgClassneme}`
+        `icon-font${getSvgClassname}`
       }
     >
       <filter
