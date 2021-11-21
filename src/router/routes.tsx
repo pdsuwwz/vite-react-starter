@@ -117,6 +117,9 @@ const routesMap: IRouteProps[] = [
   },
   {
     path: '/404',
+    meta: {
+      name: '404'
+    },
     component: NoMatch
   }
 ]
