@@ -1,6 +1,6 @@
 import React, { ComponentType, lazy } from 'react'
 import { IRouteProps } from '@/router/types'
-import NoMatch from '@/components/exception/404'
+import NoMatch from '@/components/Exception/404'
 import { Redirect } from 'react-router'
 
 
