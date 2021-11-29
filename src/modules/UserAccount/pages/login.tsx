@@ -4,7 +4,7 @@ import '@/modules/UserAccount/styles/login.scss'
 import Footer from '@/components/Footer'
 import config from '@/config'
 import { Button, Input, Form } from 'antd'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 import {
   LockOutlined,
@@ -19,12 +19,16 @@ import { RespData } from '@/utils/request'
 import { useAppDispatch } from '@/store'
 import TodoModule from '@/modules/UserAccount/store'
 
+export interface FormProps {
+  email: string,
+  password: string
+}
+
 
 const LoginPage: React.FC = () => {
   const history = useHistory()
   const dispatch = useAppDispatch()
-  const location = useLocation()
-  const [form] = Form.useForm()
+  const [form] = Form.useForm<FormProps>()
   const [loading, setLoading] = useState(false)
 
   const handleSubmit = async () => {
@@ -42,13 +46,10 @@ const LoginPage: React.FC = () => {
   }
 
   useEffect(() => {
-    if (config.isDevelopment) {
-      form.setFieldsValue({
-        email: 'vite.admin@gmail.com',
-        userName: 'admin',
-        password: ''
-      })
-    }
+    form.setFieldsValue({
+      email: 'vite.admin@gmail.com',
+      password: ''
+    })
   }, [form])
 
 
