@@ -1,6 +1,29 @@
 {
   "name": "vite-react-starter",
   "version": "0.0.1",
+  "author": "Wisdom <pdsu.wwz@foxmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "tsc && vite build",
+    "preview": "vite preview --host",
+    "lint": "tsc --pretty && eslint ./src --ext .js,.jsx,.tsx,.ts",
+    "lint:fix": "tsc --pretty && eslint --fix --cache --ext .js,.jsx,.tsx,.ts ./src"
+  },
+  "keywords": [
+    "react",
+    "react17",
+    "vite",
+    "typescript",
+    "admin",
+    "example",
+    "template",
+    "starter",
+    "dashboard",
+    "framework",
+    "prototyping",
+    "antd"
+  ],
   "homepage": "https://github.com/pdsuwwz/vite-react-starter",
   "bugs": {
     "url": "https://github.com/pdsuwwz/vite-react-starter/issues"
@@ -8,13 +31,6 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pdsuwwz/vite-react-starter.git"
-  },
-  "scripts": {
-    "dev": "vite --host",
-    "build": "tsc && vite build",
-    "preview": "vite preview --host",
-    "lint": "tsc --pretty && eslint ./src --ext .js,.jsx,.tsx,.ts",
-    "lint:fix": "tsc --pretty && eslint --fix --cache --ext .js,.jsx,.tsx,.ts ./src"
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
