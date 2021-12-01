@@ -1,6 +1,4 @@
 /lambda/
-/scripts
-/config
 .history
 /coverage
 /mock
@@ -9,8 +7,6 @@
 /public
 /src/assets/
 /node_modules
-/tests
-__tests__
 *.json
 /e2e
 /assets
