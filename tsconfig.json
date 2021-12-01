@@ -1,6 +1,7 @@
 {
   "include": [
-    "src"
+    "src/**/*",
+    "__tests__/**/*"
   ],
   "exclude": [
     "node_modules",
@@ -12,9 +13,11 @@
     "jest"
   ],
   "compilerOptions": {
-    "baseUrl": "src",
+    "baseUrl": "./",
     "paths": {
-      "@/*": ["*"]
+      "@/*": [
+        "src/*"
+      ]
     },
 
     "noEmit": true,
@@ -41,6 +44,10 @@
     "removeComments": false,
     "jsx": "react-jsx",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "types": ["vite/client", "node"],
+    "types": [
+      "vite/client",
+      "jest",
+      "node"
+    ],
   }
 }
