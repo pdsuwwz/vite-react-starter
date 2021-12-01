@@ -12,10 +12,15 @@
     "lint": "tsc --pretty && eslint ./src --ext .js,.jsx,.tsx,.ts",
     "lint:fix": "tsc --pretty && eslint --fix --cache --ext .js,.jsx,.tsx,.ts ./src"
   },
+  "engines": {
+    "node": ">=14.18.x"
+  },
   "keywords": [
     "react",
     "react17",
     "vite",
+    "jest",
+    "babel",
     "typescript",
     "admin",
     "example",
