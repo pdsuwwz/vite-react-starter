@@ -44,7 +44,7 @@ const Auth = withRouter(AuthComponent)
 
 export const NoMatchRoute: React.FC = () => {
   return (
-    <Route name="404 not found">
+    <Route>
       <NoMatch />
     </Route>
   )

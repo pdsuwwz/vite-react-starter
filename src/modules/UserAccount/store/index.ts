@@ -112,16 +112,15 @@ class TodoModule implements BaseStoreModuleInterface<TodoState> {
     // TODO: 如何在 action 中使用 state
     increaseNumberAsync(data: number) {
       return async (dispatch: Dispatch, getState: any): Promise<RespData> => {
-        const { todo } = getState()
 
         const idInterval = setInterval(() => {
-          dispatch(this.increaseWaitTime(--todo.waitTime))
+          dispatch(this.increaseWaitTime(--getState().todo.waitTime))
         }, 1000)
         await sleep(4000)
         clearInterval(idInterval)
         dispatch(this.increaseWaitTime(4))
 
-        const mockResponse = data + todo.num
+        const mockResponse = data + getState().todo.num
         console.log('fetch API: 假定拿到为: ', mockResponse)
 
         dispatch(this.increaseNumber(mockResponse))
