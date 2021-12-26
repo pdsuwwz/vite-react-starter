@@ -20,7 +20,7 @@
 Install node dependencies in all packages
 
 ```bash
-yarn install
+pnpm i
 ```
 
 ## Run
@@ -28,6 +28,6 @@ yarn install
 Local Development
 
 ```bash
-yarn dev
+pnpm dev
 ```
 
