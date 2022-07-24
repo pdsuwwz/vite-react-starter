@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite'
-import reactRefresh from '@vitejs/plugin-react-refresh'
+import reactPlugin from '@vitejs/plugin-react'
 import path from 'path'
 
 
@@ -20,9 +20,13 @@ export default defineConfig((configEnv) => {
   const isDevelopment = configEnv.mode === 'development'
   return {
     plugins: [
-      reactRefresh(),
+      reactPlugin(),
       htmlPlugin()
     ],
+    // https://github.com/vitejs/vite/issues/8644#issuecomment-1159308803
+    esbuild: {
+      logOverride: { 'this-is-undefined-in-esm': 'silent' }
+    },
 
     resolve: {
       alias: [
